@@ -1,2 +1,17 @@
 Jogo de turno
 
+Idéias
+
+# URGENTE PARA FAZER
+# DESENVOLVER UMA LOGICA PARA BUFF E DEBUFF
+
+# DECIDIR SE VAI USAR FLOAT NOS ATRIBUTOS/VIDA OU NÃO, CASO DECIDA USAR É POSSÍVEL FAZER UM LAST STAND ONDE SE FICAR COM VIDA < 1
+# VOCÊ TEM 50% DE CHANCE DE MATAR O INIMIGO AUTOMATICAMENTE | SE FOR DECIDIDO NÃO USAR FLOAT, DA PRA FAZER COM 1HP
+
+# TODA VEZ QUE VOCE CHEGA PERTO DA MORTE TEM UMA % DE DESBLOQUEAR FURIA
+# CHANCE DE RECEBER ITEM QUE DESBLOQUEIA MANA PARA O JOGADOR
+
+# CLASSES ABSTRATAS
+
+# Talvez um atributo carisma, pois o loot após batalha vai ser aleatorizado já que a platéia que vai
+# dar os itens ou não (chance de ganhar algo ou de n ganhar, e afetar a qualidade do item caso ganhe)
