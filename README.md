@@ -30,7 +30,8 @@ também com um arquivo 'test_jogo.py'
 
 ###### Idéias
 
-####### PARA FAZER
+###### PARA FAZER
+
 Desenvolver a lógica para buff e debuff
 
 Last stand vida = 1
