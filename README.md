@@ -40,8 +40,7 @@ Bibliotecas necessárias: 'Pygame', 'Pytest'
 pip install -r requirements.txt
 ### 4. Para rodar o jogo execute 'arena.py'
 ### 5. Para testar o 'test_jogo.py' execute 'Pytest' no terminal
-
-
+##
 ## **Idéias**
 
 ##### PARA FAZER
