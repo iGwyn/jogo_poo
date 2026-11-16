@@ -28,6 +28,7 @@ class Combate:
         self.mensagens.append(texto)
         del self.mensagens[:-50]
 
+    # Tenta realizar a ação, caso não seja possível registra o motivo no log
     def _tentar(self, func, *args):
         try:
             func(*args)

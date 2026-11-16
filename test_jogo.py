@@ -1,7 +1,7 @@
 import pytest
 from core import Gladiador, NPC
 from classes_racas import raca, classe
-from itens import Arma, Armadura, consumivel, RARIDADES
+from itens import arma, armadura, consumivel, RARIDADES
 from combate import Combate
 from habilidades import tecnica, magia
 
@@ -41,19 +41,19 @@ def test_equipar_arma_e_armadura():
     """Testa se equipar itens altera os atributos do personagem."""
     j = Gladiador("Maximus", raca("humano"), classe("guerreiro"))
     
-    espada = Arma("Espada Rara", 14, RARIDADES["Raro"])
+    espada = arma("espada")
     espada.equipar(j)
-    assert j.arma.nome == "Espada Rara"
+    assert j.arma.nome == "Espada"
     # Multiplicador do item raro
-    assert j.arma.dano > 14
+    assert j.arma.dano == 15
     
-    peitoral = Armadura("Peitoral de Bronze", 3, RARIDADES["Comum"])
+    peitoral = armadura("peitoral")
     peitoral.equipar(j)
-    assert j.peitoral.nome == "Peitoral de Bronze"
+    assert j.peitoral.nome == "Peitoral"
 
 def test_fluxo_combate_vitoria():
     """Testa a inicialização e o fluxo básico de um combate até a vitória."""
-    j = Gladiador("Maximus", raca("humano"), classe("guerreiro"), arma = Arma("Gládio", 50, RARIDADES["Comum"]))
+    j = Gladiador("Maximus", raca("humano"), classe("guerreiro"), arma = arma("espada"))
     i = NPC("Alvo de Teste", raca("humano"), classe("guerreiro"))
     
     i.vida = 10 

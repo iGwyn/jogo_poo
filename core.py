@@ -2,6 +2,7 @@ from __future__ import annotations
 from abc import ABC, ABCMeta, abstractmethod
 import random
 
+# Classe abstrata base de Gladiador e NPC
 class Personagem(ABC):
     __nome : str
     __raca : Raca_abs
@@ -242,7 +243,6 @@ class Habilidade(ABC):
         self.chave = chave
         self.__nome = nome
         self.cooldown = cooldown
-        #self.duracao = 0
         self.custo = custo
         self.tipo = tipo
 
@@ -283,7 +283,7 @@ class Gladiador(Personagem):
         super().__init__(nome, raca, classe, arma, peitoral, capacete)
         self.inventario = Inventario()
     
-    # Passivel de sofrer alterações
+    # Passivel de sofrer alterações, atribuição de pontos de habilidade
     def atribuir_pontos(self, forca = 0, agilidade = 0, inteligencia = 0, vitalidade = 0):
         atributos = [forca, agilidade, inteligencia, vitalidade]
         

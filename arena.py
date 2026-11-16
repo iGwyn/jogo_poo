@@ -13,6 +13,7 @@ pygame.font.init()
 clock = pygame.time.Clock()
 fps = 30
 
+# Recebendo a largura e altura do display
 info_objeto = pygame.display.Info()
 screen_width = info_objeto.current_w
 screen_height = info_objeto.current_h
@@ -21,6 +22,7 @@ resolucao = pygame.FULLSCREEN | pygame.RESIZABLE
 screen = pygame.display.set_mode((screen_width, screen_height), resolucao)
 pygame.display.set_caption("Coliseu")
 
+# Carregando os arquivos de bg e painel
 bg_image = pygame.image.load("imagens/bg1.png").convert_alpha()
 painel_image = pygame.image.load("imagens/painel.png").convert_alpha()
 
@@ -87,6 +89,8 @@ def novo_combate(jogador_atual = None):
     combate = Combate(jogador, criar_inimigo())
     menu = ui.MenuCombate(combate.jogador)
 
+# No caso de save existente ele carrega o arquivo, se não inicia um novo combate, 
+# se o último estado de save foi uma vitória ele inicia um novo combate mantendo o jogador
 save_existente = carregar_jogo(caminho_save)
 if save_existente:
     combate, inimigos_derrotados = save_existente
@@ -103,16 +107,19 @@ while run:
     agora = pygame.time.get_ticks()
 
     for event in pygame.event.get():
+        # No evento de fechar o jogo
         if event.type == pygame.QUIT:
             if combate.estado != Combate.DERROTA:
                 salvar_jogo(combate, inimigos_derrotados, caminho_save)
             run = False
 
+        # Mudar o tamanho da tela
         elif event.type == pygame.VIDEORESIZE:
             screen_width, screen_height = event.w, event.h
             screen = pygame.display.set_mode((screen_width, screen_height), resolucao)
             atualizar_tamanhos(screen_width, screen_height)
 
+        # Colocar e tirar Fullscreen
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_PAGEUP:
             tela_cheia = not tela_cheia
             if tela_cheia:
@@ -125,6 +132,7 @@ while run:
             screen = pygame.display.set_mode((screen_width, screen_height), resolucao)
             atualizar_tamanhos(screen_width, screen_height)
 
+        # Salvar o jogo com F5
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_F5:
             if combate.estado != Combate.DERROTA:
                 salvar_jogo(combate, inimigos_derrotados, caminho_save)
