@@ -14,6 +14,7 @@ def criar_jogador():
     jogador.inventario.adicionar_item(armadura("capacete"))
     jogador.inventario.adicionar_item(armadura("capacete_teste"))
     jogador.inventario.adicionar_item(arma("excalibur"))
+    # Essa poção não entra no inventário devido ao limite de slot
     jogador.inventario.adicionar_item(consumivel("pocao_de_cura"))
     return jogador
 
