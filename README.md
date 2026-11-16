@@ -1,6 +1,6 @@
 ### Jogo de turno
 
-###### Nomes
+#### Nomes
 
 Davi Honorio Cardoso Bottega (1280279)
 
@@ -8,7 +8,7 @@ João Mateus Ferreira Martins (1935185)
 
 João Pedro de Oliveira Valentim (1473466)
 
-###### Email
+#### Email
 
 davi.honorio@unisantos.br
 
@@ -16,7 +16,7 @@ joaomartins@unisantos.br
 
 jpvalentim@unisantos.br
 
-###### Descrição
+#### Descrição
 
 O objetivo do projeto Coliseu é desenvolver um RPG de combate em turnos em Python, com interface gráfica em Pygame,
 utilizando os princípios da Programação Orientada a Objetos (POO) para criar classes, raças, equipamentos, técnicas, 
@@ -25,7 +25,7 @@ forma, o projeto é dividido em vários arquivos para melhor organização e ser
 também com um arquivo 'test_jogo.py' para testar possíveis mecânicas com praticidade usando Pytest e método de 
 salvamento e carregamento de saves utilizando JSON.
 
-###### Execução
+### Execução
 
 #### Pré-requisitos
 Python 3.10+ instalado
