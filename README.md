@@ -22,8 +22,8 @@ O objetivo do projeto Coliseu é desenvolver um RPG de combate em turnos em Pyth
 utilizando os princípios da Programação Orientada a Objetos (POO) para criar classes, raças, equipamentos, técnicas, 
 magias e itens, ou seja, sendo estruturado com classes abstratas, heranças, polimorfismo e encapsulamentos. Dessa 
 forma, o projeto é dividido em vários arquivos para melhor organização e serapação de responsabilidades. Ele conta
-também com um arquivo 'test_jogo.py' para testar possíveis mecânicas com praticidade e método de salvamento e 
-carregamento de saves.
+também com um arquivo 'test_jogo.py' para testar possíveis mecânicas com praticidade usando Pytest e método de 
+salvamento e carregamento de saves utilizando JSON.
 
 ###### Execução
 
