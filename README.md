@@ -27,9 +27,14 @@ salvamento e carregamento de saves utilizando JSON.
 
 ###### Execução
 
-1. Tenha o Python instalado
-2. Na pasta do projeto instale as dependências do arquivo 'requirements.txt': pip install -r requirements.txt
-3. Para rodar o jogo execute 'arena.py'
+#### Pré-requisitos
+Python 3.10+ instalado
+Bibliotecas necessárias: 'Pygame', 'Pytest'
+
+### 1. Clonar ou baixar o repositório main.py
+### 2. Configurar o ambiente virtual (opcional)
+### 3. Na pasta do projeto instale as dependências do arquivo 'requirements.txt': pip install -r requirements.txt
+### 4. Para rodar o jogo execute 'arena.py'
 
 ###### **Idéias**
 
