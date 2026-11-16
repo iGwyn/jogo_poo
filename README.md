@@ -33,8 +33,13 @@ Bibliotecas necessárias: 'Pygame', 'Pytest'
 
 ### 1. Clonar ou baixar o repositório main.py
 ### 2. Configurar o ambiente virtual (opcional)
-### 3. Na pasta do projeto instale as dependências do arquivo 'requirements.txt': pip install -r requirements.txt
+**Criar o ambiente virtual:** python -m venv venv
+**Ativar o ambiente (Windows):** venv\Scripts\activate
+**Ativar o ambiente (MacOS/Linux):** source venv/bin/activate
+### 3. Na pasta do projeto instale as dependências do arquivo 'requirements.txt': 
+pip install -r requirements.txt
 ### 4. Para rodar o jogo execute 'arena.py'
+### 5. Para testar o 'test_jogo.py' execute 'Pytest' no terminal
 
 ###### **Idéias**
 
