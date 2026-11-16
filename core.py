@@ -1,5 +1,6 @@
 from __future__ import annotations
 from abc import ABC, ABCMeta, abstractmethod
+import random
 
 class Personagem(ABC):
     __nome : str
@@ -14,13 +15,13 @@ class Personagem(ABC):
     vitalidade : int
     arma : Item
     peitoral : Item
+    capacete : Item
     
-    def __init__(self, nome, raca, classe, arma = None, peitoral = None):
+    def __init__(self, nome, raca, classe, arma = None, peitoral = None, capacete = None):
         self.__nome = nome
         self.__raca = raca
         self.__classe = classe
         self.tecnicas = []
-        # Talvez inserir a lista de magias no inicializador de mana
         self.magias = []
         self.buffs_ativos = []
         self.debuffs_ativos = []
@@ -33,7 +34,7 @@ class Personagem(ABC):
         
         self.arma = arma
         self.peitoral = peitoral
-
+        self.capacete = capacete
         self.esta_defendendo = False
         self.bonus_bloqueio = 1.5
         
@@ -67,6 +68,10 @@ class Personagem(ABC):
     @property
     def vida(self):
         return self.__vida
+    
+    @property
+    def vida_maxima(self):
+        return self.__vida_maxima
 
     @vida.setter
     def vida(self, valor):
@@ -100,22 +105,33 @@ class Personagem(ABC):
         self.esta_defendendo = True
 
     def defesa_atual(self):
+        defesa_natural = self.vitalidade * 0.15
+        if self.peitoral is None and self.capacete is None:
+            AC = round(defesa_natural)
+        elif self.capacete is None:
+            AC = round(self.peitoral.defesa + defesa_natural)
+        elif self.peitoral is None:
+            AC = round(self.capacete.defesa + defesa_natural)
+        else:
+            AC = round(self.peitoral.defesa + self.capacete.defesa + defesa_natural)
+
         if self.esta_defendendo:
-            return round(self.peitoral.defesa * self.bonus_bloqueio)
-        return self.peitoral.defesa
+            return round(AC * self.bonus_bloqueio)
+        return AC
     
     def receber_dano(self, dano):
         if self.__vida == 0:
-            print(f"{self.__nome} já morreu...")
-            return False
+            raise Exception(f"{self.__nome} já morreu...")
         else:
+            dano -= self.defesa_atual()
+            if dano < 0:
+                dano = 0
             self.__vida -= dano
             if hasattr(self, 'furia'):
                 self.gerenciar_recurso("receber_dano", 10)
             if self.__vida < 0:
                 self.__vida = 0
-                print(f"{self.__nome} morreu...")
-                return False
+                raise Exception(f"{self.__nome} morreu...")
         return True
 
     def receber_cura(self, cura):
@@ -136,8 +152,7 @@ class Personagem(ABC):
                 break
     
         if not habilidade_encontrada:
-            print(f"{self.__nome} não conhece a habilidade {habilidade.nome}.")
-            return False
+            raise Exception(f"{self.__nome} não conhece a habilidade {habilidade.nome}.")
         
         if habilidade_encontrada.pode_usar(self):
             if inimigo:
@@ -146,8 +161,7 @@ class Personagem(ABC):
                 habilidade_encontrada.executar(self)
             return True
         else:
-            print(f"{self.__nome} não pode usar {habilidade.nome} agora.")
-            return False
+            raise Exception(f"{self.__nome} não pode usar {habilidade.nome} agora.")
     
     # Mover esse para gladiador após os testes, já q não precisamos saber o cooldown dos NPCs | Ou deixar aqui 
     def mostrar_habilidade(self):
@@ -171,7 +185,6 @@ class Personagem(ABC):
         if hasattr(self, 'furia'):
             if evento in ["atacar", "receber_dano"]:
                 self.furia = min(self.furia_maxima, self.furia + valor)
-                print(f"{self.__nome} gerou fúria! Atual: {self.furia}")
 
         if hasattr(self, 'mana'):
             if evento == "proximo_turno":
@@ -220,7 +233,7 @@ class IEquipavel(ABC):
         pass
     
 class Habilidade(ABC):
-    def __init__(self, nome, custo = 0, cooldown= 0, tipo = str):
+    def __init__(self, nome, custo = 0, cooldown = 0, tipo = str):
         self.__nome = nome
         self.cooldown = cooldown
         #self.duracao = 0
@@ -291,8 +304,7 @@ class Gladiador(Personagem):
     def usar_item(self, numero_do_slot):
         item = self.inventario.verificar_item(numero_do_slot)
         if item is None:
-            print(f"Slot {numero_do_slot} está vazio.")
-            return False
+            raise Exception(f"Slot {numero_do_slot} está vazio.")
         
         if isinstance(item, IConsumivel):
             item.usar(self)
@@ -303,8 +315,7 @@ class Gladiador(Personagem):
             self.inventario.remover_item(numero_do_slot)
             return True
         else:
-            print(f"O {item.nome} não pode ser usado.")
-            return False
+            raise Exception(f"O {item.nome} não pode ser usado.")
         
 class Inventario:
     def __init__(self):
@@ -323,7 +334,7 @@ class Inventario:
             item_removido = self.slots[posicao]
             self.slots[posicao] = None
             return item_removido
-        return False
+        raise Exception(f"Slot {numero_do_slot} está vazio.")
     
     def listar_itens(self):
         for i, item in enumerate(self.slots):
@@ -336,4 +347,30 @@ class Inventario:
         posicao = numero_do_slot - 1
         if 0 <= posicao < len(self.slots):
             return self.slots[posicao]
-        return None
+        raise Exception(f"Slot {numero_do_slot} está vazio.")
+    
+class NPC(Personagem):
+    def __init__(self, nome, raca, classe, arma = None, peitoral = None, chance_habilidade = 0.5):
+        super().__init__(nome, raca, classe, arma, peitoral)
+        self.chance_habilidade = chance_habilidade
+
+    # Randomizar os atributos do NPC com base na sua classe    
+    
+    def atribuir_pontos(self):
+        pass
+
+    def habilidades_disponiveis(self):
+        resultados = []
+        todas_habilidades = self.tecnicas + self.magias
+    
+        for h in todas_habilidades:
+            if h.pode_usar(self):
+                resultados.append(h)
+    
+        return resultados
+    
+    def decidir_acao(self, alvo = None):
+        disponiveis = self.habilidades_disponiveis()
+        if disponiveis and random.random() < self.chance_habilidade:
+            return ("habilidade", random.choice(disponiveis))
+        return ("atacar",)
