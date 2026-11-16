@@ -29,6 +29,7 @@ salvamento e carregamento de saves utilizando JSON.
 
 #### Pré-requisitos
 Python 3.10+ instalado
+
 Bibliotecas necessárias: 'Pygame', 'Pytest'
 
 ### 1. Clonar ou baixar o repositório main
