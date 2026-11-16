@@ -5,9 +5,9 @@ from habilidades import tecnica, magia
 # CLASSES
 
 class Classe(Classe_abs):
-    def __init__(self, nome, b_forca, b_agilidade, b_inteligencia, b_vitalidade, recurso, passiva_funcao):
-        super().__init__(b_forca = b_forca, b_agilidade = b_agilidade, b_inteligencia = b_inteligencia, b_vitalidade = b_vitalidade, recurso = recurso)
-        self.nome = nome
+    def __init__(self, chave, nome, b_forca, b_agilidade, b_inteligencia, b_vitalidade, recurso, passiva_funcao):
+        super().__init__(chave = chave, nome = nome, b_forca = b_forca, b_agilidade = b_agilidade, 
+                         b_inteligencia = b_inteligencia, b_vitalidade = b_vitalidade, recurso = recurso)
         self.passiva_funcao = passiva_funcao
 
     def passiva(self, personagem):
@@ -35,6 +35,7 @@ def classe(classe):
     
     config = DICIONARIO_CLASSES[classe]
     return Classe(
+        chave = classe,
         nome = config["nome"],
         b_forca = config["b_forca"],
         b_agilidade = config["b_agilidade"],
@@ -47,9 +48,9 @@ def classe(classe):
 # RAÇA
 
 class Raca(Raca_abs):
-    def __init__(self, nome, b_forca, b_agilidade, b_inteligencia, b_vitalidade, funcao_passiva):
-        super().__init__(b_forca = b_forca, b_agilidade = b_agilidade, b_inteligencia = b_inteligencia, b_vitalidade = b_vitalidade)
-        self.nome = nome
+    def __init__(self, chave, nome, b_forca, b_agilidade, b_inteligencia, b_vitalidade, funcao_passiva):
+        super().__init__(chave = chave, nome = nome, b_forca = b_forca, b_agilidade = b_agilidade, 
+                         b_inteligencia = b_inteligencia, b_vitalidade = b_vitalidade)
         self.funcao_passiva = funcao_passiva
         
     def passiva(self, personagem):
@@ -76,6 +77,7 @@ def raca(raca):
     
     config = DICIONARIO_RACAS[raca]
     return Raca(
+        chave = raca,
         nome = config["nome"],
         b_forca = config["b_forca"],
         b_agilidade = config["b_agilidade"],

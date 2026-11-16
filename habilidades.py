@@ -6,8 +6,8 @@ from core import Habilidade
 class Tecnica(Habilidade):
     efeito_funcao : str # Função
     
-    def __init__(self, nome, efeito_funcao, custo = 0, poder_da_tecnica = 0, cooldown_padrao = 0):
-        super().__init__(nome, custo, tipo = "Técnica")
+    def __init__(self, chave, nome, efeito_funcao, custo = 0, poder_da_tecnica = 0, cooldown_padrao = 0):
+        super().__init__(chave = chave, nome = nome, custo = custo, tipo = "Técnica")
         self.poder = poder_da_tecnica
         self.efeito_funcao = efeito_funcao
         self.cooldown_padrao = cooldown_padrao
@@ -60,6 +60,7 @@ def tecnica(tecnica):
     
     config = DICIONARIO_TECNICAS[tecnica]
     return Tecnica(
+        chave = tecnica,
         nome = config["nome"],
         custo = config["custo"],
         poder_da_tecnica = config["poder_da_tecnica"],
@@ -72,8 +73,8 @@ def tecnica(tecnica):
 class Magia(Habilidade):
     efeito_funcao : str # Função
     
-    def __init__(self, nome, efeito_funcao, custo = 0, poder_do_feitico = 0, cooldown_padrao = 0):
-        super().__init__(nome, custo, tipo = "Magia")
+    def __init__(self, chave, nome, efeito_funcao, custo = 0, poder_do_feitico = 0, cooldown_padrao = 0):
+        super().__init__(chave = chave, nome = nome, custo = custo, tipo = "Magia")
         self.poder = poder_do_feitico
         self.efeito_funcao = efeito_funcao
         self.cooldown_padrao = cooldown_padrao
@@ -141,6 +142,7 @@ def magia(magia):
     
     config = DICIONARIO_MAGIAS[magia]
     return Magia(
+        chave = magia,
         nome = config["nome"],
         custo = config["custo"],
         poder_do_feitico = config["poder_do_feitico"],

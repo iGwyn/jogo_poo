@@ -1,7 +1,11 @@
 import pygame
 import ui
+import os
 from combate import Combate
 from criacao import criar_jogador, criar_inimigo
+from save import salvar_jogo, carregar_jogo, caminho_save
+
+# Interface
 
 pygame.init()
 pygame.font.init()
@@ -44,19 +48,6 @@ def area_do_painel(fracao):
 
 atualizar_tamanhos(screen_width, screen_height)
 
-combate = None
-menu = None
-inimigos_derrotados = 0
-vitoria_registrada = False
-
-def novo_combate():
-    global combate, menu, vitoria_registrada, turno
-    vitoria_registrada = False
-    combate = Combate(criar_jogador(), criar_inimigo())
-    menu = ui.MenuCombate(combate.jogador)
-
-novo_combate()
-
 def draw_bg():
     screen.blit(bg_copy, (0, 0))
 
@@ -70,6 +61,7 @@ def draw_interface():
 
     ui.desenhar_log(screen, combate.mensagens)
     ui.desenhar_inimigo(screen, combate.inimigo)
+    ui.desenhar_turno(screen, combate.turno)
     if combate.terminou:
         ui.desenhar_fim(screen, combate.estado == Combate.VITORIA,
                         screen_height - painel_altura_atual, inimigos_derrotados)
@@ -77,12 +69,43 @@ def draw_interface():
 run = True
 tela_cheia = True
 
+# Combate
+
+combate = None
+menu = None
+inimigos_derrotados = 0
+vitoria_registrada = False
+
+def novo_combate(jogador_atual = None):
+    global combate, menu, vitoria_registrada
+    vitoria_registrada = False
+    if jogador_atual is not None:
+        jogador = jogador_atual
+    else:
+        jogador = criar_jogador()
+    
+    combate = Combate(jogador, criar_inimigo())
+    menu = ui.MenuCombate(combate.jogador)
+
+save_existente = carregar_jogo(caminho_save)
+if save_existente:
+    combate, inimigos_derrotados = save_existente
+    
+    if combate.estado == combate.VITORIA:
+        novo_combate(combate.jogador)
+    else:
+        menu = ui.MenuCombate(combate.jogador)
+else:
+    novo_combate()
+
 while run:
     clock.tick(fps)
     agora = pygame.time.get_ticks()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
+            if combate.estado != Combate.DERROTA:
+                salvar_jogo(combate, inimigos_derrotados, caminho_save)
             run = False
 
         elif event.type == pygame.VIDEORESIZE:
@@ -102,23 +125,34 @@ while run:
             screen = pygame.display.set_mode((screen_width, screen_height), resolucao)
             atualizar_tamanhos(screen_width, screen_height)
 
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_F5:
+            if combate.estado != Combate.DERROTA:
+                salvar_jogo(combate, inimigos_derrotados, caminho_save)
+                combate.registrar("Jogo salvo!")
+        
         elif combate.estado == Combate.TURNO_JOGADOR:
             acao = menu.tratar_evento(event)
             if acao:
                 combate.executar_acao_jogador(acao, agora)
 
         elif combate.terminou:
-            if combate.estado == Combate.VITORIA and not vitoria_registrada:
-                inimigos_derrotados += 1
-                vitoria_registrada = True
-            
             if event.type == pygame.KEYDOWN and event.key == pygame.K_r:
-                if combate.estado == Combate.DERROTA:
+                if combate.estado == Combate.VITORIA:
+                    novo_combate(combate.jogador)
+                    salvar_jogo(combate, inimigos_derrotados, caminho_save)
+                else:
+                    if os.path.exists(caminho_save):
+                        os.remove(caminho_save)
                     inimigos_derrotados = 0
-                novo_combate()        
+                    novo_combate()        
 
     combate.atualizar(agora)
 
+    if combate.estado == Combate.VITORIA and not vitoria_registrada:
+        inimigos_derrotados += 1
+        vitoria_registrada = True
+        salvar_jogo(combate, inimigos_derrotados, caminho_save)
+    
     draw_bg()
     draw_painel()
     draw_interface()

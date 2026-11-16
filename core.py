@@ -198,7 +198,9 @@ class Personagem(ABC):
         pass"""
 
 class Raca_abs(ABC):
-    def __init__(self, b_forca, b_agilidade, b_inteligencia, b_vitalidade):
+    def __init__(self, chave, nome, b_forca, b_agilidade, b_inteligencia, b_vitalidade):
+        self.chave = chave
+        self.nome = nome
         self.b_forca = b_forca
         self.b_agilidade = b_agilidade
         self.b_inteligencia = b_inteligencia
@@ -207,7 +209,9 @@ class Raca_abs(ABC):
 class Classe_abs(ABC):
     recurso : str # Furia ou Mana
     
-    def __init__(self, b_forca, b_agilidade, b_inteligencia, b_vitalidade, recurso):
+    def __init__(self, chave, nome, b_forca, b_agilidade, b_inteligencia, b_vitalidade, recurso):
+        self.chave = chave
+        self.nome = nome
         self.b_forca = b_forca
         self.b_agilidade = b_agilidade
         self.b_inteligencia = b_inteligencia
@@ -219,7 +223,8 @@ class Classe_abs(ABC):
         pass
 
 class Item(ABC):
-    def __init__(self, nome):
+    def __init__(self, chave, nome):
+        self.chave = chave
         self.nome = nome
 
 class IConsumivel(ABC):
@@ -233,7 +238,8 @@ class IEquipavel(ABC):
         pass
     
 class Habilidade(ABC):
-    def __init__(self, nome, custo = 0, cooldown = 0, tipo = str):
+    def __init__(self, chave, nome, custo = 0, cooldown = 0, tipo = str):
+        self.chave = chave
         self.__nome = nome
         self.cooldown = cooldown
         #self.duracao = 0
@@ -273,8 +279,8 @@ class Habilidade(ABC):
 class Gladiador(Personagem):
     inventario : Inventario
     
-    def __init__(self, nome, raca, classe, arma = None, peitoral = None):
-        super().__init__(nome, raca, classe, arma, peitoral)
+    def __init__(self, nome, raca, classe, arma = None, peitoral = None, capacete = None):
+        super().__init__(nome, raca, classe, arma, peitoral, capacete)
         self.inventario = Inventario()
     
     # Passivel de sofrer alterações
@@ -319,7 +325,7 @@ class Gladiador(Personagem):
         
 class Inventario:
     def __init__(self):
-        self.slots = [None] * 9
+        self.slots = [None] * 8
     
     def adicionar_item(self, item):
         for i in range(len(self.slots)):
@@ -350,8 +356,8 @@ class Inventario:
         raise Exception(f"Slot {numero_do_slot} está vazio.")
     
 class NPC(Personagem):
-    def __init__(self, nome, raca, classe, arma = None, peitoral = None, chance_habilidade = 0.5):
-        super().__init__(nome, raca, classe, arma, peitoral)
+    def __init__(self, nome, raca, classe, arma = None, peitoral = None, capacete = None, chance_habilidade = 0.5):
+        super().__init__(nome, raca, classe, arma, peitoral, capacete)
         self.chance_habilidade = chance_habilidade
 
     # Randomizar os atributos do NPC com base na sua classe    

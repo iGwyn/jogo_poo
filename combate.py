@@ -3,18 +3,20 @@ class Combate:
     TURNO_INIMIGO = "turno_inimigo"
     VITORIA = "vitoria"
     DERROTA = "derrota"
-
+    
     ESPERA_INIMIGO_MS = 1000
 
-    def __init__(self, jogador, inimigo):
+    def __init__(self, jogador, inimigo, iniciar_combate = True):
         self.jogador = jogador
         self.inimigo = inimigo
         self.estado = self.TURNO_JOGADOR
+        self.turno = 1
         self.mensagens = []
         self._proximo_evento = 0
 
-        self.registrar("Um novo desafio no Coliseu!")
-        self.jogador.comecar_turno()
+        if iniciar_combate:
+            self.registrar("Um novo desafio no Coliseu!")
+            self.jogador.comecar_turno()
 
     @property
     def terminou(self):
@@ -49,7 +51,7 @@ class Combate:
     def executar_acao_jogador(self, acao, agora):
         if self.estado != self.TURNO_JOGADOR:
             return False
-
+        
         j, i = self.jogador, self.inimigo
         tipo = acao[0]
 
@@ -112,6 +114,7 @@ class Combate:
             self.registrar(f"{j.nome} caiu na arena...")
             self.estado = self.DERROTA
         else:
+            self.turno += 1
             j.comecar_turno()
             self.estado = self.TURNO_JOGADOR
             self.registrar("Sua vez!")

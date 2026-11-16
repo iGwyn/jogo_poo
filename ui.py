@@ -409,6 +409,13 @@ def desenhar_log(surf, mensagens):
         txt = cortar_texto(linha, fonte_pequena, caixa.w - pad * 2)
         texto(surf, fonte_pequena, txt, cor, (caixa.x + pad, caixa.y + pad + i * altura_linha))
 
+def desenhar_turno(screen, turno):
+    fonte = pygame.font.SysFont("arial", 28, bold = True) 
+    texto = fonte.render(f"Turno {turno}", True, (255, 255, 255))
+
+    rect = texto.get_rect(midtop = (screen.get_width() // 2, 20))
+    screen.blit(texto, rect)
+
 def desenhar_fim(surf, venceu, altura_cena, derrotados):
     largura_tela = surf.get_width()
     titulo = "VITÓRIA!" if venceu else "DERROTA..."
