@@ -3,7 +3,9 @@
 ###### Nomes
 
 Davi Honorio Cardoso Bottegga (1280279)
+
 João Mateus Ferreira Martins (1935185)
+
 João Pedro de Oliveira Valentim (1473466)
 
 ###### Email
