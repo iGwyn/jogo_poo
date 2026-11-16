@@ -2,7 +2,7 @@
 
 ###### Nomes
 
-Davi Honorio Cardoso Bottegga (1280279)
+Davi Honorio Cardoso Bottega (1280279)
 
 João Mateus Ferreira Martins (1935185)
 
