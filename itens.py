@@ -4,8 +4,7 @@ from core import Item, IConsumivel, IEquipavel
 # EQUIPAMENTOS
 
 class Raridade:
-    def __init__(self, chave, nome, multiplicador, cor):
-        self.chave = chave
+    def __init__(self, nome, multiplicador, cor):
         self.__nome = nome
         self.__multiplicador = multiplicador
         self.__cor = cor
@@ -19,9 +18,9 @@ class Raridade:
         return self.__multiplicador
 
 RARIDADES = {
-    "Comum" : Raridade("comum", "Comum", 1.0, "Branco"),
-    "Raro" : Raridade("raro", "Raro", 1.5, "Azul"),
-    "Epico" : Raridade("epico", "Épico", 2.2, "Roxo")
+    "Comum" : Raridade("Comum", 1.0, "Branco"),
+    "Raro" : Raridade("Raro", 1.5, "Azul"),
+    "Epico" : Raridade("Épico", 2.2, "Roxo")
 }
 
 ########################################################################
