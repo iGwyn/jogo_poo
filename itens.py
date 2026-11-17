@@ -47,7 +47,7 @@ DICIONARIO_ARMAS = {
     },
     "excalibur" : {
         "nome" : "Excalibur",
-        "dano" : 50,
+        "dano" : 20,
         "raridade" : "Epico"
     }
 }
@@ -89,7 +89,7 @@ DICIONARIO_ARMADURAS = {
         "nome" : "Peitoral",
         "tipo" : "peitoral",
         "defesa" : 10,
-        "raridade" : "Comum"
+        "raridade" : "Raro"
     },
     "peitoral_teste" : {
         "nome" : "Peitoral -10 defesa",
@@ -101,7 +101,7 @@ DICIONARIO_ARMADURAS = {
         "nome" : "Capacete",
         "tipo" : "capacete",
         "defesa" : 5,
-        "raridade" : "Comum"
+        "raridade" : "Epico"
     },
     "capacete_teste" : {
         "nome" : "Capacete da morte",
