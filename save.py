@@ -140,9 +140,9 @@ def _montar_npc(dados):
         classe = classe(dados["classe"]),
         arma = _montar_item(eq["arma"]),
         peitoral = _montar_item(eq["peitoral"]),
+        capacete = _montar_item(eq["capacete"]),
         chance_habilidade = dados.get("chance_habilidade", 0.5),
     )
-    inimigo.capacete = _montar_item(eq["capacete"])
     _restaurar_estado_personagem(inimigo, dados)
 
     return inimigo
