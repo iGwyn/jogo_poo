@@ -33,8 +33,7 @@ class Arma(Item, IEquipavel):
     def __init__(self, chave, nome, dano, raridade):
         super().__init__(chave, nome)
         self.raridade = raridade
-        self.dano_base = dano
-        self.dano = round(self.dano_base * raridade.multiplicador)
+        self.dano = round(dano * raridade.multiplicador)
         
     def equipar(self, personagem):
         personagem.arma = self
@@ -75,8 +74,7 @@ class Armadura(Item, IEquipavel):
         super().__init__(chave, nome)
         self.tipo = tipo
         self.raridade = raridade
-        self.defesa_base = defesa
-        self.defesa = round(self.defesa_base * raridade.multiplicador)
+        self.defesa = round(defesa * raridade.multiplicador)
     
     def equipar(self, personagem):
         if self.tipo == "peitoral":
